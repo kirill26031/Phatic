@@ -30,20 +30,31 @@ const answer = async (message) => {
         values.forEach(w => o_v.splice(m.indexOf(w.text), 0, w))
         return o_v
     })
-    .then(arr => {
-        let str = ""
-        arr.forEach(w => {
-            str = str+w.text+'-('
-            w.parts.forEach(p => str = str+'/'+p)
-            str = str +') '
+        .then(arr => {
+            let str = ""
+            arr.forEach(w => {
+                str = str + w.text + '-('
+                w.parts.forEach(p => str = str + '/' + p)
+                str = str + ') '
+            })
+            return str
         })
-        return str
-    })
     console.log(words)
     // return words
+    // can-(/verb/noun) you-(/verb/pronoun) explain-(/verb) me-(/pronoun) this-(/noun/adverb/pronoun/interjection)
     for (key in patterns.Patterns) {
         if (patterns.Patterns.hasOwnProperty(key)) {
-            if(words.match(key)) return getRandom(patterns.Patterns[key])
+            let match = words.match(key)
+            if (match) {
+                let resps = patterns.Patterns[key]
+                if (match.length===1) return getRandom(resps)
+                else{
+                    console.log("here")
+                    let result = getRandom(resps)
+                    for(let i=1; i<match.length; ++i) result = result.replace("$"+i, transform_pronoun(match[i]))
+                    return result
+                }
+            }
         }
     }
     return "Error"
@@ -65,7 +76,7 @@ const wordTypes = async (word) => {
             res.entries.forEach(entry => {
                 entry.interpretations.forEach(inter => arr.push(inter.partOfSpeech))
                 entry.lexemes.forEach(lexeme => lexeme.senses.forEach(sense => {
-                    if(sense.definition.match(aux_regex)) arr.push('auxiliary')
+                    if (sense.definition.match(aux_regex)) arr.push('auxiliary')
                 }))
             })
             return {
@@ -80,4 +91,11 @@ const wordTypes = async (word) => {
         })
 }
 
-const getRandom = (arr) => arr[Math.floor(arr.length*Math.random())]
+const getRandom = (arr) => arr[Math.floor(arr.length * Math.random())]
+
+const transform_pronoun = (pronoun) => {
+    if (patterns.Transform_words.hasOwnProperty(pronoun)) {
+        return patterns.Transform_words[pronoun]
+    }
+    return pronoun
+}
