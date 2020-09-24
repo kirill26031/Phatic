@@ -1,10 +1,13 @@
 require('dotenv').config()
 const fetch = require('node-fetch');
+const Cache = require( 'node-cache' );
 const fs = require('fs')
 const { Telegraf } = require('telegraf')
 const bot = new Telegraf(process.env.BOT_TOKEN)
 
 const patterns = JSON.parse(fs.readFileSync('./patterns.json'))
+
+const cache = new Cache()
 
 bot.start((ctx) => ctx.reply("Hi!"))
 
@@ -62,7 +65,9 @@ const answer = async (message) => {
 }
 
 const wordTypes = async (word) => {
-    return await fetch("https://lingua-robot.p.rapidapi.com/language/v1/entries/en/" + word, {
+    let cached_value = cache.get(`wordTypes_${word}`)
+    if(cached_value!==undefined) return cached_value
+    let requested_value = await fetch("https://lingua-robot.p.rapidapi.com/language/v1/entries/en/" + word, {
         headers: {
             "x-rapidapi-host": "lingua-robot.p.rapidapi.com",
             "x-rapidapi-key": process.env.API_TOKEN,
@@ -89,6 +94,8 @@ const wordTypes = async (word) => {
             console.log(err)
             return null
         })
+        cache.set(`wordTypes_${word}`, requested_value)
+        return requested_value
 }
 
 const getRandom = (arr) => arr[Math.floor(arr.length * Math.random())]
