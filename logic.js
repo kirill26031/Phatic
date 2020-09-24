@@ -57,9 +57,9 @@ const wordTypes = async (word) => {
             const aux_regex = /\(auxiliary\)/
             res.entries.forEach(entry => {
                 entry.interpretations.forEach(inter => arr.push(inter.partOfSpeech))
-                entry.lexemes.forEach(lexeme => lexeme.senses.forEach(sense => {
-                    if (sense.definition.match(aux_regex)) arr.push('auxiliary')
-                }))
+                // entry.lexemes.forEach(lexeme => lexeme.senses.forEach(sense => {
+                //     if (sense.definition.match(aux_regex)) arr.push('auxiliary')
+                // }))
             })
             return {
                 text: word,
