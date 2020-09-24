@@ -1,13 +1,13 @@
 require('dotenv').config()
-const fetch = require('node-fetch');
-const Cache = require('node-cache');
-const fs = require('fs')
+// const fetch = require('node-fetch');
+// const Cache = require('node-cache');
+// const fs = require('fs')
 const { Telegraf } = require('telegraf')
 const bot = new Telegraf(process.env.BOT_TOKEN)
 const logic = require('./logic')
-const patterns = JSON.parse(fs.readFileSync('./patterns.json'))
 
-const cache = new Cache()
+
+// const cache = new Cache()
 
 bot.start((ctx) => ctx.reply("Hi!"))
 

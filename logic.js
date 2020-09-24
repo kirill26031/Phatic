@@ -1,3 +1,9 @@
+const fetch = require('node-fetch');
+const Cache = require('node-cache');
+const fs = require('fs')
+const patterns = JSON.parse(fs.readFileSync('./patterns.json'))
+const cache = new Cache()
+
 const answer = async (message) => {
     let pat = /\W+/
     message = message.toLowerCase()
