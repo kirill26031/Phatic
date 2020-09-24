@@ -10,12 +10,7 @@ const answer = async (message) => {
     let m = message.split(' ')
     let words = await Promise.all(
         m.map(word => { return wordTypes(word.replace(pat, '')) })
-    ).then(values => {
-        o_v = []
-        values.forEach(w => o_v.splice(m.indexOf(w.text), 0, w))
-        return o_v
-    })
-        .then(arr => {
+    ).then(arr => {
             let str = ""
             arr.forEach(w => {
                 str = str + w.text + '-('
