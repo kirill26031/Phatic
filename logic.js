@@ -34,6 +34,19 @@ const answer = async (message) => {
     // return words
     // can-(/verb/noun) you-(/verb/pronoun) explain-(/verb) me-(/pronoun) this-(/noun/adverb/pronoun/interjection)
     // const format_regex = /<f>((?:[^<])*)<\/f>/g
+    let matchedFlag = ''
+    for(key in patterns.Flags){
+        if(str.includes(key)){
+            matchedFlag = patterns.Flags[key]
+        }
+    }
+
+    resultArray.concat(getFlagResponse(matchedFlag))
+    console.log(resultArray.length)
+    if (resultArray.length != 0){
+     return resultArray
+    }
+
     const format_regex = /(?:\w+)-\((?:\/\w+)*\)/g
     for (key in patterns.Patterns) {
         if (patterns.Patterns.hasOwnProperty(key)) {
@@ -127,6 +140,18 @@ const decode_key = (key) => {
 
 const toUpper = (str) => str.charAt(0).toUpperCase()+str.slice(1)
 
+async function getFlagResponse(flag) {
+    switch(flag.id){
+        case "RANDOM_FACT_FLAG":
+            const resultArray = []
+            n = Math.floor(Math.random() * flag["generic"].length) 
+            resultArray.push(flag["generic"][n])
+            resultArray.push(await api.getRandomFact().then(res => {return res.text}))
+            return resultArray
+        default:
+            return []
+    }
+}
 
 module.exports = {
     answer,

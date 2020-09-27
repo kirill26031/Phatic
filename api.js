@@ -27,9 +27,3 @@ module.exports = {
     getGender,getRandomFact
 }
 
-// if(message.includes("fact")){
-//     resultArray.push(genericPhrase[Math.floor(Math.random()*resultArray.length)])
-//     resultArray.push(await facts.getRandomFact().then(res => {return res.text}))
-    
-//     return resultArray
-// }
