@@ -2,25 +2,26 @@
     "Patterns": {
         "^where": ["Outside", "Near Brovary", "In the neighbourhood", "In France", "In the galaxy far far away"],
         "^when": ["Right now", "Tomorrow", "At a weekend", "At the dawn of time", "07 September 2022"],
-        "^(can|could|would|should|do|did|does|have|has|had|will|might|may|am|are|is|was|were)-\\((?:\/\\w+)*\\) (\\w+)-\\((?:\/\\w+)*(?:\/pronoun|\/noun|)": ["Yes, $2 $1", "No, $2 $1 not"],
-        "^\\w+-\\((?:\/\\w+)*\/auxiliary": ["Yes", "No", "Maybe", "Who knows?", "We will never know"],
+        "^($auxilary)-$parenthesis (\\w+)-\\($part_of_speech*(?:\/pronoun|\/noun|)": ["Yes, $2 $1", "No, $2 $1 not"],
+        "^what-$parenthesis ($auxilary)-$parenthesis you-$parenthesis think-$parenthesis ($anything)": 
+        [
+            "I $1 not think $2"
+        ],
         "(?:[\\w\\W])*": ["I don't understand you", "Explain yourself"]
     },
-    "Question_words": [
-        "who",
-        "what",
-        "where",
-        "when",
-        "how",
-        "why",
-        "how"
-    ],
+    "Variables": {
+        "$auxilary": "can|could|would|should|do|did|does|have|has|had|will|might|may|am|are|is|was|were",
+        "$parenthesis": "\\((?:\\/\\w+)*\\)",
+        "$part_of_speech": "(?:\\/\\w+)",
+        "$anything": "(?:[\\w\\W])*"
+    },
     "Transform_words": {
         "i": "you",
         "am": "are",
         "was": "were",
         "you": "I",
         "are": "am",
-        "were": "was"
+        "were": "was",
+        "me": "you"
     }
 }
