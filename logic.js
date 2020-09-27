@@ -7,7 +7,8 @@ const cache = new Cache()
 
 const answer = async (message) => {
     let resultArray = []
-    let m = message.split(/\W+/).filter(str => str.length > 0)
+    message = message.toLowerCase()
+    let m = message.match(/(?:\w|')+/g).filter(str => str.length > 0)
     let words = await Promise.all(
         m.map(word => { return wordTypes(word) })
     )
@@ -15,11 +16,11 @@ const answer = async (message) => {
         words.map(async word => {
             let name = await api.getGender(word.text, cache)
             if (name.gender !== undefined) {
-                word.parts = ['name', name.gender]
+                word.parts.push('name')
+                word.parts.push(name.gender)
+                word.text = toUpper(word.text)
             }
-            else {
-                word.text = word.text.toLowerCase()
-            }
+            if(word.parts.length>2) word.text = word.text.toLowerCase()
             return word
         })
     )
@@ -99,7 +100,11 @@ const wordTypes = async (word) => {
             // used in the next pattern
             //"^\\w+-\\((?:\/\\w+)*\/auxiliary": ["Yes", "No", "Maybe", "Who knows?", "We will never know"],
             res.entries.forEach(entry => {
-                entry.interpretations.forEach(inter => arr.push(inter.partOfSpeech))
+                entry.interpretations.map(inter => {
+                    if(inter.lemma === word+"s") arr.push('plural')
+                    return inter.partOfSpeech.replace(/\W+/, '')
+                })
+                    .forEach(part => arr.push(part))
                 // entry.lexemes.forEach(lexeme => lexeme.senses.forEach(sense => {
                 //     if (sense.definition.match(aux_regex)) arr.push('auxiliary')
                 // }))

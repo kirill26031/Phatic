@@ -9,7 +9,6 @@ const logic = require('./logic')
 
 // const cache = new Cache()
 
-bot.start((ctx) => ctx.reply("Hi!"))
 
 bot.on('text',  (ctx) => {
     console.log(ctx.update.message.text)

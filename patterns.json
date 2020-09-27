@@ -1,8 +1,13 @@
 {
     "Patterns": {
+        "(?:what's-$parenthesis up)|(?:how-$parenthesis are-$parenthesis you)": ["I'm fine", "I'm doing good", "Actually, not well"],
+        "(?:(?:how-$parenthesis (is|was))|how's)-$parenthesis ($anything)": [
+            "$2 $1 fine"
+        ],
+        "^(?:hello|hi|sup|start|hey|let's-$parenthesis go-$parenthesis)": ["Hello", "Hi", "Greetings"],
         "^where": ["Outside", "Near Brovary", "In the neighbourhood", "In France", "In the galaxy far far away"],
         "^when": ["Right now", "Tomorrow", "At a weekend", "At the dawn of time", "07 September 2022"],
-        "^($auxilary)-$parenthesis (\\w+)-\\($part_of_speech*(?:\/pronoun|\/noun|)": ["Yes, $2 $1", "No, $2 $1 not"],
+        "^($auxilary)-$parenthesis (\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)": ["Yes, $2 $1", "No, $2 $1 not"],
         "^what-$parenthesis ($auxilary)-$parenthesis you-$parenthesis think-$parenthesis ($anything)": [
             "I $1 not think $2"
         ],
@@ -34,7 +39,8 @@
         "$parenthesis": "\\((?:\\/\\w+)*\\)",
         "$parts_of_speech": "(?:\\/\\w+)*",
         "$anything": "(?:[\\w\\W])*",
-        "$sex": "(?:fe)?male"
+        "$sex": "(?:fe)?male",
+        "$word": "\\w+-\\((?:\\/\\w+)*\\)"
     },
     "Transform_words": {
         "i": "you",
@@ -45,6 +51,8 @@
         "were": "was",
         "me": "you",
         "female": "she",
-        "male": "he"
+        "male": "he",
+        "my": "your",
+        "your": "my"
     }
 }
