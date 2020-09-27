@@ -15,7 +15,7 @@
         "^(\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)$parts_of_speech\\) ($auxilary)": [
             "$1 $2, indeed", "Yes, $1 $2", "No, $1 $2 not"
         ],
-        "(?:[\\w\\W])*": ["I don't understand you", "Explain yourself"]
+        "$anything": ["I don't understand you", "Explain yourself"]
     },
     "Flags": {
         "fact": {
