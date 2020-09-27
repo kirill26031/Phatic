@@ -1,12 +1,15 @@
 {
     "Patterns": {
         "(?:what's-$parenthesis up)|(?:how-$parenthesis are-$parenthesis you)": ["I'm fine", "I'm doing good", "Actually, not well"],
-        "(?:(?:how-$parenthesis (is|was))|how's)-$parenthesis ($anything)": [
+        "(?:how-$parenthesis (is|was|are|were))-$parenthesis ($anything)": [
             "$2 $1 fine"
         ],
         "^(?:hello|hi|sup|start|hey|let's-$parenthesis go-$parenthesis)": ["Hello", "Hi", "Greetings"],
         "^where": ["Outside", "Near Brovary", "In the neighbourhood", "In France", "In the galaxy far far away"],
         "^when": ["Right now", "Tomorrow", "At a weekend", "At the dawn of time", "07 September 2022"],
+        "why-$parenthesis ($auxilary)-$parenthesis (\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)$parts_of_speech\\) ($anything)":[
+            "Who said that $1 $2 $3?", "$2 $1 not, actually you are $3", "Because of 42", "Because of ... "
+        ],
         "^($auxilary)-$parenthesis (\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)": ["Yes, $2 $1", "No, $2 $1 not"],
         "^what-$parenthesis ($auxilary)-$parenthesis you-$parenthesis think-$parenthesis ($anything)": [
             "I $1 not think $2"
@@ -20,7 +23,10 @@
         "^(\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)$parts_of_speech\\) ($auxilary)": [
             "$1 $2, indeed", "Yes, $1 $2", "No, $1 $2 not"
         ],
-        "fuck|shit|hell|idiot|retard|suck" : ["Watch your language!", "One more forbidden word, and I'll kill you", "Stop swearing!"],
+        "^how-$parenthesis ($auxilary)-$parenthesis (\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)$parts_of_speech\\) (\\w+)-\\($parts_of_speech(?:\/verb)$parts_of_speech\\)":[
+            "Who knows how $1 $2 $3", "You should ask someone who $3", "No one knows"
+        ],
+        "fuck|shit|hell|idiot|retard|suck" : ["Watch your language!", "One more forbidden word, and I'll punish you", "Stop swearing!"],
         "$anything": ["I don't understand you", "Explain yourself"]
     },
     "Flags": {

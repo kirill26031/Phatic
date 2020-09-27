@@ -14,6 +14,7 @@ bot.on('text',  (ctx) => {
     console.log(ctx.update.message.text)
     logic.answer(ctx.update.message.text).then(async res => {
         res = res.map(elem => logic.toUpper(elem))
+        res = res.map(elem => elem.replace(/(?: )+/, " "))
         console.log(res)
 
         for(let msg of res){
