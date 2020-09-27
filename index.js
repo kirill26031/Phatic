@@ -13,17 +13,14 @@ bot.start((ctx) => ctx.reply("Hi!"))
 
 bot.on('text',  (ctx) => {
     console.log(ctx.update.message.text)
-    // answer(ctx.update.message.text).then(res => ctx.reply(res))
     logic.answer(ctx.update.message.text).then(async res => {
+        res = res.map(elem => logic.toUpper(elem))
         console.log(res)
 
         for(let msg of res){
             await ctx.reply(msg);
         }
         
-        // Promise.all(promises).then(() => 
-        //     console.log('done')
-        // );
     })
 })
 

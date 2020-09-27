@@ -1,27 +1,37 @@
 const fetch = require('node-fetch');
 const Cache = require('node-cache');
 const facts = require('./facts.js')
-const fs = require('fs');
-const { restart } = require('nodemon');
+const fs = require('fs')
+const api = require('./api')
 const patterns = JSON.parse(fs.readFileSync('./patterns.json'))
 const cache = new Cache()
 
 const answer = async (message) => {
-    message = message.toLowerCase()
     let resultArray = []
     let m = message.split(/\W+/).filter(str => str.length > 0)
     let words = await Promise.all(
         m.map(word => { return wordTypes(word) })
-    ).then(arr => {
-            let str = ""
-            arr.forEach(w => {
-                str = str + w.text + '-('
-                w.parts.forEach(p => str = str + '/' + p)
-                str = str + ') '
-            })
-            return str
+    )
+    words = await Promise.all(
+        words.map(async word => {
+            let name = await api.getGender(word.text, cache)
+            if (name.gender !== undefined) {
+                word.parts = ['name', name.gender]
+            }
+            else {
+                word.text = word.text.toLowerCase()
+            }
+            return word
         })
-    console.log(words)
+    )
+    let str = ""
+    words.forEach(w => {
+        str = str + w.text + '-('
+        w.parts.forEach(p => str = str + '/' + p)
+        str = str + ') '
+    })
+
+    console.log(str)
     // return words
     // can-(/verb/noun) you-(/verb/pronoun) explain-(/verb) me-(/pronoun) this-(/noun/adverb/pronoun/interjection)
     // const format_regex = /<f>((?:[^<])*)<\/f>/g
@@ -29,7 +39,7 @@ const answer = async (message) => {
     for (key in patterns.Patterns) {
         if (patterns.Patterns.hasOwnProperty(key)) {
             let pattern = (key.match(/\$/)) ? decode_key(key) : key
-            let match = words.match(pattern)
+            let match = str.match(pattern)
             if (match) {
                 let resps = patterns.Patterns[key]
                 if (match.length === 1) {
@@ -107,17 +117,19 @@ const transform_pronoun = (pronoun) => {
 
 const decode_key = (key) => {
     let pattern = key
-    for(v in patterns.Variables){
-        if(patterns.Variables.hasOwnProperty(v)){
+    for (v in patterns.Variables) {
+        if (patterns.Variables.hasOwnProperty(v)) {
             let regex = new RegExp(`\\${v}`, 'g')
             pattern = pattern.replace(regex, patterns.Variables[v])
-        } 
+        }
     }
     return pattern
 }
 
-// answer("Drop me a fact").then(res=> console.log(res))
+const toUpper = (str) => str.charAt(0).toUpperCase()+str.slice(1)
+
 
 module.exports = {
-    answer
+    answer,
+    toUpper
 }
