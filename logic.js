@@ -6,7 +6,7 @@ const cache = new Cache()
 
 const answer = async (message) => {
     message = message.toLowerCase()
-    let m = message.split(/\W+/).filter(str=>str.length>0)
+    let m = message.split(/\W+/).filter(str => str.length > 0)
     let words = await Promise.all(
         m.map(word => { return wordTypes(word) })
     ).then(values => {
@@ -26,15 +26,23 @@ const answer = async (message) => {
     console.log(words)
     // return words
     // can-(/verb/noun) you-(/verb/pronoun) explain-(/verb) me-(/pronoun) this-(/noun/adverb/pronoun/interjection)
+    // const format_regex = /<f>((?:[^<])*)<\/f>/g
+    const format_regex = /(?:\w+)-\((?:\/\w+)*\)/g
     for (key in patterns.Patterns) {
         if (patterns.Patterns.hasOwnProperty(key)) {
-            let match = words.match(key)
+            let pattern = (key.match(/\$/)) ? decode_key(key) : key
+            let match = words.match(pattern)
             if (match) {
                 let resps = patterns.Patterns[key]
                 if (match.length === 1) return getRandom(resps)
                 else {
                     let result = getRandom(resps)
                     for (let i = 1; i < match.length; ++i) result = result.replace("$" + i, transform_pronoun(match[i]))
+                    let format_match = result.match(format_regex)
+                    if(!format_match) return result
+                    format_match.forEach(word => {
+                        result = result.replace(word, transform_pronoun(word.replace(/-\((?:\/\w+)*\)/, "")))
+                    })
                     return result
                 }
             }
@@ -58,6 +66,8 @@ const wordTypes = async (word) => {
             if (res.success === false) throw new Error("Unknown word")
             let arr = []
             // const aux_regex = /\(auxiliary\)/
+            // used in the next pattern
+            //"^\\w+-\\((?:\/\\w+)*\/auxiliary": ["Yes", "No", "Maybe", "Who knows?", "We will never know"],
             res.entries.forEach(entry => {
                 entry.interpretations.forEach(inter => arr.push(inter.partOfSpeech))
                 // entry.lexemes.forEach(lexeme => lexeme.senses.forEach(sense => {
@@ -85,6 +95,17 @@ const transform_pronoun = (pronoun) => {
         return patterns.Transform_words[pronoun]
     }
     return pronoun
+}
+
+const decode_key = (key) => {
+    let pattern = key
+    for(v in patterns.Variables){
+        if(patterns.Variables.hasOwnProperty(v)){
+            let regex = new RegExp(`\\${v}`, 'g')
+            pattern = pattern.replace(regex, patterns.Variables[v])
+        } 
+    }
+    return pattern
 }
 
 module.exports = {
