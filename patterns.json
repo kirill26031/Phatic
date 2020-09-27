@@ -10,7 +10,7 @@
         "^you-$parenthesis are-$parenthesis (\\w+)-\\($parts_of_speech(?:\/adjective|\/noun|)": [
             "Who said that I am $1?", "No, you are $1", "Yes, and I am proud of being $1"
         ],
-        "^(?:\\w+)-\\($parts_of_speech(?:\/name\/(\\w+))$parts_of_speech\\) ($auxilary)": [
+        "^(?:\\w+)-\\($parts_of_speech\/($sex)$parts_of_speech\\) ($auxilary)": [
             "$1 $2, indeed", "Yes, $1 $2", "No, $1 $2 not"
         ],
         "^(\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)$parts_of_speech\\) ($auxilary)": [
@@ -22,7 +22,8 @@
         "$auxilary": "can|could|would|should|does|did|do|have|has|had|will|might|may|am|are|is|was|were",
         "$parenthesis": "\\((?:\\/\\w+)*\\)",
         "$parts_of_speech": "(?:\\/\\w+)*",
-        "$anything": "(?:[\\w\\W])*"
+        "$anything": "(?:[\\w\\W])*",
+        "$sex": "(?:fe)?male"
     },
     "Transform_words": {
         "i": "you",
