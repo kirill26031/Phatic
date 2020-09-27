@@ -11,12 +11,19 @@ const logic = require('./logic')
 
 bot.start((ctx) => ctx.reply("Hi!"))
 
-bot.on('text', (ctx) => {
+bot.on('text',  (ctx) => {
     console.log(ctx.update.message.text)
     // answer(ctx.update.message.text).then(res => ctx.reply(res))
-    logic.answer(ctx.update.message.text).then(res => {
+    logic.answer(ctx.update.message.text).then(async res => {
         console.log(res)
-        ctx.reply(res)
+
+        for(let msg of res){
+            await ctx.reply(msg);
+        }
+        
+        // Promise.all(promises).then(() => 
+        //     console.log('done')
+        // );
     })
 })
 

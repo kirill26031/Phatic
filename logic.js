@@ -1,11 +1,14 @@
 const fetch = require('node-fetch');
 const Cache = require('node-cache');
-const fs = require('fs')
+const facts = require('./facts.js')
+const fs = require('fs');
+const { restart } = require('nodemon');
 const patterns = JSON.parse(fs.readFileSync('./patterns.json'))
 const cache = new Cache()
 
 const answer = async (message) => {
     message = message.toLowerCase()
+    let resultArray = []
     let m = message.split(/\W+/).filter(str => str.length > 0)
     let words = await Promise.all(
         m.map(word => { return wordTypes(word) })
@@ -29,21 +32,31 @@ const answer = async (message) => {
             let match = words.match(pattern)
             if (match) {
                 let resps = patterns.Patterns[key]
-                if (match.length === 1) return getRandom(resps)
+                if (match.length === 1) {
+                    resultArray.push(getRandom(resps))
+                    return resultArray
+                }
                 else {
                     let result = getRandom(resps)
                     for (let i = 1; i < match.length; ++i) result = result.replace("$" + i, transform_pronoun(match[i]))
                     let format_match = result.match(format_regex)
-                    if(!format_match) return result
+                    if(!format_match){
+                        resultArray.push(result)
+                        return resultArray
+                    }
                     format_match.forEach(word => {
                         result = result.replace(word, transform_pronoun(word.replace(/-\((?:\/\w+)*\)/, "")))
                     })
-                    return result
+
+                    resultArray.push(result)
+                    return resultArray
                 }
             }
         }
     }
-    return "Error"
+
+    resultArray.push("Error")
+    return resultArray
 
 }
 
@@ -102,6 +115,8 @@ const decode_key = (key) => {
     }
     return pattern
 }
+
+// answer("Drop me a fact").then(res=> console.log(res))
 
 module.exports = {
     answer
