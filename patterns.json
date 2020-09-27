@@ -2,15 +2,20 @@
     "Patterns": {
         "(?:what's-$parenthesis up)|(?:how-$parenthesis are-$parenthesis you)": ["I'm fine", "I'm doing good", "Actually, not well"],
         "(?:(?:how-$parenthesis (is|was))|how's)-$parenthesis ($anything)": [
-            "$2 $1 fine", "Honestly, I don't really like $2", "$2 $1 was DEFINETELY bad", "meh, nothing special"
-        ],
+            "$2 $1 fine", "Honestly, I don't really like $2", "$2 $1 was DEFINETELY bad", "meh, nothing special"],
         "^(?:hello|hi|sup|start|hey|let's-$parenthesis go-$parenthesis)": ["Hello", "Hi", "Greetings", "Well, hello!", "Ahoy!","Hello again"],
         "^where": ["Outside", "Near Brovary", "In the neighbourhood", "In France", "In the galaxy far far away"],
         "^when": ["Right now", "Tomorrow", "At a weekend","I am not really sure", "At the dawn of time", "07 September 2022","I am not really sure"],
         "^($auxilary)-$parenthesis (\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)": ["Yes, $2 $1", "No, $2 $1 not", "That doesn't bother me"],
+        "why-$parenthesis ($auxilary)-$parenthesis (\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)$parts_of_speech\\) ($anything)":[
+            "Who said that $1 $2 $3?", "$2 $1 not, actually you are $3", "Because of 42", "Because of ... "
+        ],
         "^what-$parenthesis ($auxilary)-$parenthesis you-$parenthesis think-$parenthesis ($anything)": [
             "I $1 not think $2",
             "That doesn't bother me",
+            "$2 $1 not, actually you are $3",
+            "Because of 42",
+            "Because of ...",
             "I don't really care",
             "Let me hear you answer first"
         ],
@@ -25,7 +30,10 @@
         ],
         "you.*[a-z].bot" : ["No, you", "Potato", "Nope." , "Wrong"],
         "fuck|shit|hell|idiot|retard|suck" : ["Watch your language!", "One more forbidden word, and I'll kill you", "Stop swearing!"],
-        "$anything": ["I don't understand you", "Explain yourself", "What?", "Sorry, I didn't get you","Any... other questions?"]
+        "$anything": ["I don't understand you", "Explain yourself", "What?", "Sorry, I didn't get you","Any... other questions?"],
+        "^how-$parenthesis ($auxilary)-$parenthesis (\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)$parts_of_speech\\) (\\w+)-\\($parts_of_speech(?:\/verb)$parts_of_speech\\)":[
+            "Who knows how $1 $2 $3", "You should ask someone who $3", "No one knows"
+        ]
     },
     "Flags": {
         "fact": {
