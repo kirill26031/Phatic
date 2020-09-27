@@ -15,6 +15,7 @@ bot.on('text', (ctx) => {
     console.log(ctx.update.message.text)
     // answer(ctx.update.message.text).then(res => ctx.reply(res))
     logic.answer(ctx.update.message.text).then(res => {
+        res = logic.toUpper(res)
         console.log(res)
         ctx.reply(res)
     })
