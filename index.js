@@ -11,13 +11,16 @@ const logic = require('./logic')
 
 bot.start((ctx) => ctx.reply("Hi!"))
 
-bot.on('text', (ctx) => {
+bot.on('text',  (ctx) => {
     console.log(ctx.update.message.text)
-    // answer(ctx.update.message.text).then(res => ctx.reply(res))
-    logic.answer(ctx.update.message.text).then(res => {
-        res = logic.toUpper(res)
+    logic.answer(ctx.update.message.text).then(async res => {
+        res = res.map(elem => logic.toUpper(elem))
         console.log(res)
-        ctx.reply(res)
+
+        for(let msg of res){
+            await ctx.reply(msg);
+        }
+        
     })
 })
 

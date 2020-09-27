@@ -2,9 +2,8 @@
     "Patterns": {
         "^where": ["Outside", "Near Brovary", "In the neighbourhood", "In France", "In the galaxy far far away"],
         "^when": ["Right now", "Tomorrow", "At a weekend", "At the dawn of time", "07 September 2022"],
-        "^($auxilary)-$parenthesis (\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)": ["Yes, $2 $1", "No, $2 $1 not"],
-        "^what-$parenthesis ($auxilary)-$parenthesis you-$parenthesis think-$parenthesis ($anything)": 
-        [
+        "^($auxilary)-$parenthesis (\\w+)-\\($part_of_speech*(?:\/pronoun|\/noun|)": ["Yes, $2 $1", "No, $2 $1 not"],
+        "^what-$parenthesis ($auxilary)-$parenthesis you-$parenthesis think-$parenthesis ($anything)": [
             "I $1 not think $2"
         ],
         "^you-$parenthesis are-$parenthesis (\\w+)-\\($parts_of_speech(?:\/adjective|\/noun|)": [
@@ -17,6 +16,17 @@
             "$1 $2, indeed", "Yes, $1 $2", "No, $1 $2 not"
         ],
         "(?:[\\w\\W])*": ["I don't understand you", "Explain yourself"]
+    },
+    "Flags": {
+        "fact": {
+            "id": "RANDOM_FACT_FLAG",
+            "generic": [
+                "Wanna hear a fact? okay..",
+                "Oh, I know one!",
+                "I found this one on facebook",
+                "Yo mamma so fat... Just kidding, here's one!"
+            ]
+        }
     },
     "Variables": {
         "$auxilary": "can|could|would|should|does|did|do|have|has|had|will|might|may|am|are|is|was|were",
