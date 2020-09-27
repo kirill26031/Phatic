@@ -2,17 +2,20 @@
     "Patterns": {
         "(?:what's-$parenthesis up)|(?:how-$parenthesis are-$parenthesis you)": ["I'm fine", "I'm doing good", "Actually, not well"],
         "(?:(?:how-$parenthesis (is|was))|how's)-$parenthesis ($anything)": [
-            "$2 $1 fine"
+            "$2 $1 fine", "Honestly, I don't really like $2", "$2 $1 was DEFINETELY bad", "meh, nothing special"
         ],
-        "^(?:hello|hi|sup|start|hey|let's-$parenthesis go-$parenthesis)": ["Hello", "Hi", "Greetings"],
+        "^(?:hello|hi|sup|start|hey|let's-$parenthesis go-$parenthesis)": ["Hello", "Hi", "Greetings", "Well, hello!", "Ahoy!","Hello again"],
         "^where": ["Outside", "Near Brovary", "In the neighbourhood", "In France", "In the galaxy far far away"],
-        "^when": ["Right now", "Tomorrow", "At a weekend", "At the dawn of time", "07 September 2022"],
-        "^($auxilary)-$parenthesis (\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)": ["Yes, $2 $1", "No, $2 $1 not"],
+        "^when": ["Right now", "Tomorrow", "At a weekend","I am not really sure", "At the dawn of time", "07 September 2022","I am not really sure"],
+        "^($auxilary)-$parenthesis (\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)": ["Yes, $2 $1", "No, $2 $1 not", "That doesn't bother me"],
         "^what-$parenthesis ($auxilary)-$parenthesis you-$parenthesis think-$parenthesis ($anything)": [
-            "I $1 not think $2"
+            "I $1 not think $2",
+            "That doesn't bother me",
+            "I don't really care",
+            "Let me hear you answer first"
         ],
         "^you-$parenthesis are-$parenthesis (\\w+)-\\($parts_of_speech(?:\/adjective|\/noun|)": [
-            "Who said that I am $1?", "No, you are $1", "Yes, and I am proud of being $1"
+            "Who said that I am $1?", "No, you are $1", "Yes, and I am proud of being $1","Maybe...", "Are you sure about that?"
         ],
         "^(?:\\w+)-\\($parts_of_speech\/($sex)$parts_of_speech\\) ($auxilary)": [
             "$1 $2, indeed", "Yes, $1 $2", "No, $1 $2 not"
@@ -20,8 +23,9 @@
         "^(\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)$parts_of_speech\\) ($auxilary)": [
             "$1 $2, indeed", "Yes, $1 $2", "No, $1 $2 not"
         ],
+        "you.*[a-z].bot" : ["No, you", "Potato", "Nope." , "Wrong"],
         "fuck|shit|hell|idiot|retard|suck" : ["Watch your language!", "One more forbidden word, and I'll kill you", "Stop swearing!"],
-        "$anything": ["I don't understand you", "Explain yourself"]
+        "$anything": ["I don't understand you", "Explain yourself", "What?", "Sorry, I didn't get you","Any... other questions?"]
     },
     "Flags": {
         "fact": {

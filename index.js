@@ -9,7 +9,6 @@ const logic = require('./logic')
 
 // const cache = new Cache()
 
-
 bot.on('text',  (ctx) => {
     console.log(ctx.update.message.text)
     logic.answer(ctx.update.message.text).then(async res => {
