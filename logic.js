@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const Cache = require('node-cache');
-const facts = require('./facts.js')
 const fs = require('fs')
 const api = require('./api')
 const patterns = JSON.parse(fs.readFileSync('./patterns.json'))
