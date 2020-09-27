@@ -15,6 +15,7 @@
         "^(\\w+)-\\($parts_of_speech(?:\/pronoun|\/noun|)$parts_of_speech\\) ($auxilary)": [
             "$1 $2, indeed", "Yes, $1 $2", "No, $1 $2 not"
         ],
+        "fuck|shit|hell|idiot|retard|suck" : ["Watch your language!", "One more forbidden word, and I'll kill you", "Stop swearing!"],
         "$anything": ["I don't understand you", "Explain yourself"]
     },
     "Flags": {
