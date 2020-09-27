@@ -3,7 +3,6 @@
         "^where": ["Outside", "Near Brovary", "In the neighbourhood", "In France", "In the galaxy far far away"],
         "^when": ["Right now", "Tomorrow", "At a weekend", "At the dawn of time", "07 September 2022"],
         "^(can|could|would|should|do|did|does|have|has|had|will|might|may|am|are|is|was|were)-\\((?:\/\\w+)*\\) (\\w+)-\\((?:\/\\w+)*(?:\/pronoun|\/noun|)": ["Yes, $2 $1", "No, $2 $1 not"],
-        "^\\w+-\\((?:\/\\w+)*\/auxiliary": ["Yes", "No", "Maybe", "Who knows?", "We will never know"],
         "(?:[\\w\\W])*": ["I don't understand you", "Explain yourself"]
     },
     "Question_words": [

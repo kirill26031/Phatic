@@ -5,11 +5,10 @@ const patterns = JSON.parse(fs.readFileSync('./patterns.json'))
 const cache = new Cache()
 
 const answer = async (message) => {
-    let pat = /\W+/
     message = message.toLowerCase()
-    let m = message.split(' ')
+    let m = message.split(/\W+/).filter(str=>str.length>0)
     let words = await Promise.all(
-        m.map(word => { return wordTypes(word.replace(pat, '')) })
+        m.map(word => { return wordTypes(word) })
     ).then(values => {
         o_v = []
         values.forEach(w => o_v.splice(m.indexOf(w.text), 0, w))
@@ -34,7 +33,6 @@ const answer = async (message) => {
                 let resps = patterns.Patterns[key]
                 if (match.length === 1) return getRandom(resps)
                 else {
-                    console.log("here")
                     let result = getRandom(resps)
                     for (let i = 1; i < match.length; ++i) result = result.replace("$" + i, transform_pronoun(match[i]))
                     return result
@@ -59,12 +57,12 @@ const wordTypes = async (word) => {
         .then(res => {
             if (res.success === false) throw new Error("Unknown word")
             let arr = []
-            const aux_regex = /\(auxiliary\)/
+            // const aux_regex = /\(auxiliary\)/
             res.entries.forEach(entry => {
                 entry.interpretations.forEach(inter => arr.push(inter.partOfSpeech))
-                entry.lexemes.forEach(lexeme => lexeme.senses.forEach(sense => {
-                    if (sense.definition.match(aux_regex)) arr.push('auxiliary')
-                }))
+                // entry.lexemes.forEach(lexeme => lexeme.senses.forEach(sense => {
+                //     if (sense.definition.match(aux_regex)) arr.push('auxiliary')
+                // }))
             })
             return {
                 text: word,
